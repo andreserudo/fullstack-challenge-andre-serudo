@@ -2,26 +2,21 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ApplicationContext from './ApplicationContext';
 import { getAll } from '../services/schools';
-
-const states = {
-  LOADING: 'LOADING',
-  SUCCESS: 'SUCCESS',
-  ERROR: 'ERROR',
-};
+import serviceStates from '../services';
 
 function Provider({ children }) {
   const [schools, setSchools] = useState([]);
-  const [apiState, setApitState] = useState(states.LOADING);
+  const [apiState, setApitState] = useState(serviceStates.LOADING);
 
   const getAllSchools = async () => {
-    setApitState(states.LOADING);
+    setApitState(serviceStates.LOADING);
     const schoolsFromApi = await getAll();
 
     if (!schools) {
-      setApitState(states.ERROR);
+      setApitState(serviceStates.ERROR);
     } else {
       setSchools(schoolsFromApi);
-      setApitState(states.SUCCESS);
+      setApitState(serviceStates.SUCCESS);
     }
   };
 

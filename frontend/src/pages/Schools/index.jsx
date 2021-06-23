@@ -6,11 +6,23 @@ import SchoolsForm from '../../components/forms/SchoolsForm';
 import websitePageHOC from '../../components/wrapperPages/hoc';
 import SchoolsPageWrapper from './styles';
 import ApplicationContext from '../../context/ApplicationContext';
+import serviceStates from '../../services';
 
 function Schools() {
   const [showSchoolForm, setShowSchoolForm] = useState(false);
   const [schoolsToShow, setSchoolsToShow] = useState([]);
-  const { getAllSchools, schools } = useContext(ApplicationContext);
+  const { getAllSchools, apiState, schools } = useContext(ApplicationContext);
+
+  const displayAccordingAPIState = () => {
+    if (apiState === serviceStates.LOADING) {
+      return (<p>Buscando Escolas...</p>);
+    }
+    if (apiState === serviceStates.ERROR) {
+      return (<p>Houve um erro em exibir as Escolas</p>);
+    }
+
+    return <Table data={schools} />;
+  };
 
   const handleRequest = async () => {
     await getAllSchools();
@@ -31,7 +43,7 @@ function Schools() {
 
       </button>
       { showSchoolForm && <SchoolsForm closeForm={() => setShowSchoolForm(!setShowSchoolForm)} />}
-      <Table data={schools} />
+      { displayAccordingAPIState() }
     </SchoolsPageWrapper>
 
   );
