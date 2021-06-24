@@ -1,5 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
 import Table from '../../components/commom/Table';
 import SchoolsForm from '../../components/forms/SchoolsForm';
@@ -10,7 +8,6 @@ import serviceStates from '../../services';
 
 function Schools() {
   const [showSchoolForm, setShowSchoolForm] = useState(false);
-  const [schoolsToShow, setSchoolsToShow] = useState([]);
   const { getAllSchools, apiState, schools } = useContext(ApplicationContext);
 
   const displayAccordingAPIState = () => {

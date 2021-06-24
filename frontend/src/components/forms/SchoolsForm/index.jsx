@@ -9,7 +9,6 @@ const defaultSchoolForm = {
   responsavel: '',
 };
 
-// eslint-disable-next-line no-unused-vars
 const statusFormMessages = {
   success: 'Cadastro realizado com sucesso!',
   error: 'Não foi possível realizar o cadastro.',
