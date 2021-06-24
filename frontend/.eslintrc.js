@@ -22,6 +22,6 @@ module.exports = {
     'cypress',
   ],
   rules: {
-    'react/jsx-filename-extension': [1, { extensions: ['.js'] }],
+
   },
 };
