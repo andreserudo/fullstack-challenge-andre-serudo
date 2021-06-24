@@ -13,6 +13,19 @@ const getAll = () => {
   }).then((response) => response);
 };
 
+const createSchool = ({ nome, responsavel }) => {
+  const endpoint = `${urlBase}school`;
+
+  return HttpClient(endpoint, {
+    method: 'POST',
+    headers: {
+      Authorization: `${process.env.REACT_APP_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: { nome, responsavel },
+  }).then((response) => response).catch((err) => err);
+};
+
 const update = async () => {
   console.log('update');
 };
@@ -20,4 +33,5 @@ const update = async () => {
 export {
   getAll,
   update,
+  createSchool,
 };

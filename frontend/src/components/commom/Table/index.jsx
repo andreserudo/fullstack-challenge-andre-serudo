@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Table({ data }) {
-  console.log('Table: ', data);
   return (
     <table>
       <thead>

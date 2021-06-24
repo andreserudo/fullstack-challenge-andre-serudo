@@ -5,7 +5,7 @@ const SchoolFormWrapper = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 
     form {
         width: 100%;
