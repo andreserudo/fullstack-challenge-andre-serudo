@@ -1,31 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import SchoolFormWrapper from './styles';
+import { createSchool } from '../../../services/schools';
+import ApplicationContext from '../../../context/ApplicationContext';
 
 const defaultSchoolForm = {
   nome: '',
   responsavel: '',
 };
 
-// eslint-disable-next-line no-unused-vars
-const statusResponseRequest = {
-  success: 'SUCESS',
-  error: 'ERROR',
-};
-
-// eslint-disable-next-line no-unused-vars
 const statusFormMessages = {
   success: 'Cadastro realizado com sucesso!',
   error: 'Não foi possível realizar o cadastro.',
 };
 
 function SchoolsForm({ closeForm }) {
+  const { getAllSchools } = useContext(ApplicationContext);
   const [schoolValues, setSchoolValues] = useState(defaultSchoolForm);
   const [allowToSave, setAllowToSave] = useState(true);
+  const [schoolCreated, setSchoolCreated] = useState(false);
+  const [messageForSchoolSubmitted, setMessageForSchoolSubmitted] = useState('');
 
   const handleChange = (e, name) => {
     const { value } = e.target;
     setSchoolValues({ ...schoolValues, [name]: value });
+  };
+
+  const handleSubbmit = async (e) => {
+    const { nome, responsavel } = schoolValues;
+    e.preventDefault();
+
+    const school = await createSchool({ nome, responsavel });
+    setSchoolCreated(!schoolCreated);
+
+    if (!school) {
+      setMessageForSchoolSubmitted(statusFormMessages.error);
+      return;
+    }
+
+    await getAllSchools();
+
+    setSchoolValues(defaultSchoolForm);
   };
 
   const checkIfCanAllowSave = () => {
@@ -44,7 +59,7 @@ function SchoolsForm({ closeForm }) {
 
   return (
     <SchoolFormWrapper>
-      <form>
+      <form onSubmit={(e) => handleSubbmit(e)}>
         <label htmlFor="nome">
           Nome da Escola:
           <input
@@ -65,7 +80,7 @@ function SchoolsForm({ closeForm }) {
         </label>
         <SchoolFormWrapper.Actions>
           <button
-            type="button"
+            type="submit"
             disabled={allowToSave}
           >
             Salvar
@@ -77,7 +92,11 @@ function SchoolsForm({ closeForm }) {
             Fechar
           </button>
         </SchoolFormWrapper.Actions>
+        {}
       </form>
+      {
+        messageForSchoolSubmitted && <p>{messageForSchoolSubmitted}</p>
+      }
     </SchoolFormWrapper>
   );
 }

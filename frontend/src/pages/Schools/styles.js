@@ -6,6 +6,10 @@ const SchoolsPageWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 0 1rem;
+
+    table {
+        margin-top: 2rem;
+    }
 `;
 
 export default SchoolsPageWrapper;

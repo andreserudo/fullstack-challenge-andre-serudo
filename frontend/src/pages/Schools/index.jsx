@@ -1,20 +1,28 @@
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { fetchAllCharacters } from '../../redux/action';
+import React, { useContext, useEffect, useState } from 'react';
 import Table from '../../components/commom/Table';
 import SchoolsForm from '../../components/forms/SchoolsForm';
 import websitePageHOC from '../../components/wrapperPages/hoc';
 import SchoolsPageWrapper from './styles';
+import ApplicationContext from '../../context/ApplicationContext';
+import serviceStates from '../../services';
 
-function Schools({ getAll, schools, requestState }) {
+function Schools() {
   const [showSchoolForm, setShowSchoolForm] = useState(false);
-  const [schoolsToShow, setSchoolsToShow] = useState([]);
-  console.log(schools);
+  const { getAllSchools, apiState, schools } = useContext(ApplicationContext);
+
+  const displayAccordingAPIState = () => {
+    if (apiState === serviceStates.LOADING) {
+      return (<p>Buscando Escolas...</p>);
+    }
+    if (apiState === serviceStates.ERROR) {
+      return (<p>Houve um erro em exibir as Escolas</p>);
+    }
+
+    return <Table data={schools} />;
+  };
+
   const handleRequest = async () => {
-    await getAll();
+    await getAllSchools();
   };
 
   useEffect(() => {
@@ -32,33 +40,14 @@ function Schools({ getAll, schools, requestState }) {
 
       </button>
       { showSchoolForm && <SchoolsForm closeForm={() => setShowSchoolForm(!setShowSchoolForm)} />}
-      <Table data={schools} />
+      { displayAccordingAPIState() }
     </SchoolsPageWrapper>
 
   );
 }
 
-Schools.propTypes = {
-  getAll: PropTypes.func.isRequired,
-  requestState: PropTypes.string.isRequired,
-  schools: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.shape({})]),
-  ).isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  schools: state.schools.schools,
-  requestState: state.schools.requestState,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getAll: () => dispatch(fetchAllCharacters()),
-});
-
 export default websitePageHOC(
-  connect(
-    mapStateToProps, mapDispatchToProps,
-  )(Schools), {
+  Schools, {
     pageTitle: 'Escolas',
   },
 );
