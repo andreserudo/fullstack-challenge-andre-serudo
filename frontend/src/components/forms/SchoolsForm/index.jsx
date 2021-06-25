@@ -66,6 +66,7 @@ function SchoolsForm({ closeForm }) {
             id="nome"
             type="text"
             value={schoolValues.nome}
+            data-testid="schoolNome"
             onChange={(e) => handleChange(e, 'nome')}
           />
         </label>
@@ -75,6 +76,7 @@ function SchoolsForm({ closeForm }) {
             id="responsavel"
             type="text"
             value={schoolValues.responsavel}
+            data-testid="schoolResponsavel"
             onChange={(e) => handleChange(e, 'responsavel')}
           />
         </label>

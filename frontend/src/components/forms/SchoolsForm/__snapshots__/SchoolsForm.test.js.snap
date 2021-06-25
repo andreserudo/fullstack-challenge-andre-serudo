@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SchoolsForm /> should render according patterns 1`] = `
+<label
+  for="nome"
+>
+  Nome da Escola:
+  <input
+    data-testid="schoolNome"
+    id="nome"
+    type="text"
+    value=""
+  />
+</label>
+`;
+
+exports[`<SchoolsForm /> should render according patterns 2`] = `
+<label
+  for="responsavel"
+>
+  Responsável:
+  <input
+    data-testid="schoolResponsavel"
+    id="responsavel"
+    type="text"
+    value=""
+  />
+</label>
+`;
+
+exports[`<SchoolsForm /> should render according patterns 3`] = `
+<button
+  disabled=""
+  type="submit"
+>
+  Salvar
+</button>
+`;
+
+exports[`<SchoolsForm /> should render according patterns 4`] = `
+<button
+  type="button"
+>
+  Fechar
+</button>
+`;
